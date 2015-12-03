@@ -4,7 +4,7 @@ $( "a.preview-link" ).imageLightbox({
 
 $(document).on('click', '.loadMainContent', function(){
     var v = $(this).attr('value');
-    var t = $(this).attr('title');
+    var t = $(this).data('title');
     $('#modalContent').load(v, function () {
         $('#modalHeaderTitle').html('<h4>' + t + '</h4>');
         $('#modal').modal('show');

@@ -109,7 +109,8 @@ AppAsset::register($this);
                             'value' => $url,
                             'class' => 'loadMainContent',
                             'style' => 'cursor: pointer;',
-                            'title' => $model->name
+                            'title' => 'Просмотр',
+                            'data-title' => $model->name
                         ];
                         return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', FALSE, $options);
                     },

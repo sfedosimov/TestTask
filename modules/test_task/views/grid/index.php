@@ -1,10 +1,12 @@
 <?php
 
+
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\widgets\MaskedInput;
+use app\modules\test_task\AppAsset;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\test_task\models\BooksSearch */
@@ -12,12 +14,9 @@ use yii\widgets\MaskedInput;
 
 $this->title = 'Books';
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerCss('
-    .form-group {
-        display: inline-block;
-    }
-');
+AppAsset::register($this);
 ?>
+
 <div class="books-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -40,13 +39,13 @@ $this->registerCss('
     <br />
 
     <?= Html::label('Дата выхода книги:');?>
-    <?= $form->field($searchModel, 'date_begin', ['template' => '{input}{error}'])->widget(\yii\widgets\MaskedInput::className(),[
+    <?= $form->field($searchModel, 'date_begin', ['template' => '{input}{error}'])->widget(MaskedInput::className(),[
         'mask' => 'y-m-d'
     ])->textInput(['style' => 'width: 200px;',]);
     ?>
 
     <?= Html::label('по');?>
-    <?= $form->field($searchModel, 'date_end', ['template' => '{input}{error}'])->widget(\yii\widgets\MaskedInput::className(),[
+    <?= $form->field($searchModel, 'date_end', ['template' => '{input}{error}'])->widget(MaskedInput::className(),[
         'mask' => 'y-m-d',
     ])->textInput(['style' => 'width: 200px;',]);
     ?>
@@ -67,7 +66,14 @@ $this->registerCss('
 
             'id',
             'name',
-            'preview',
+            [
+                'attribute' => 'preview',
+                'format' => 'raw',
+                'value' => function($data) {
+                    return Html::a(Html::img(Url::to($data['preview']), ['class' => 'grid-img']),
+                        Url::to($data['preview']), ['class' => 'preview-link']) ;
+                }
+            ],
             'author',
             [
                 'attribute' => 'date',
@@ -75,7 +81,7 @@ $this->registerCss('
             ],
             [
                 'attribute' => 'date_create',
-                'value' => function($data) { // TODO: дней назад
+                'value' => function($data) {
                     list($d, $t) = explode(' ', $data['date_create']);
 
                     if (empty($d)) return '';

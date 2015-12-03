@@ -52,6 +52,13 @@ class GridController extends Controller
      */
     public function actionView($id)
     {
+        if (Yii::$app->request->isAjax) {
+            return $this->renderPartial('view', [
+                'model' => $this->findModel($id),
+                'popup' => true
+            ]);
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

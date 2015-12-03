@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\test_task\models\Books */
+/* @var $popup true|false */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Books', 'url' => ['index']];
@@ -12,7 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="books-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php if (!$popup): ?>
+        <h1><?= Html::encode($this->title) ?></h1>
+    <?php endif; ?>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

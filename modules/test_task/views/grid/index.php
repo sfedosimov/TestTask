@@ -57,13 +57,22 @@ AppAsset::register($this);
 
     <?php ActiveForm::end(); ?>
 
+    <?php
+        yii\bootstrap\Modal::begin([
+            'header' => '<span id="modalHeaderTitle"></span>',
+            'id' => 'modal',
+        ]);
+
+        echo '<div id="modalContent"></div>';
+
+        yii\bootstrap\Modal::end();
+    ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'filterPosition'=>'',
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'name',
             [
@@ -90,7 +99,22 @@ AppAsset::register($this);
                 }
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons'=>[
+                    'view' => function ($url, $model, $key) {
+                        $options = [
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal',
+                            'value' => $url,
+                            'class' => 'loadMainContent',
+                            'style' => 'cursor: pointer;',
+                            'title' => $model->name
+                        ];
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', FALSE, $options);
+                    },
+                ],
+            ],
         ],
     ]); ?>
 

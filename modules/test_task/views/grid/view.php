@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'date_update',
             'preview',
             'date',
-            'author_id',
+            'author',
         ],
     ]) ?>
 
